@@ -7,7 +7,72 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.container{
+  max-width: 940px;
+  display: flex;
+  justify-content: center;
+  padding: 5%;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+nav {
+  padding: 0px;
+
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+.active {
+  background-color: #04AA6D;
+}
+
+.nav-user {
+  float: right;
+  display: flex;
+  align-items: center;
+}
+
+.nav-avatar {
+  height: 20px;
+  width: 20px;
+  border-radius: 15px;
+  margin: 0 5px 0 10px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+}
+
+
+/* poll quesion page */
+.ui.radio.checkbox {
+  margin-left: 20px;
+  margin-bottom: 4px;
 }
