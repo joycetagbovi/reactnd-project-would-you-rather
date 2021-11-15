@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import Card from './Card';
 
 export class Home extends Component {
-  static propTypes = {
-    userQuestionData: PropTypes.object.isRequired
-  };
+ 
   render() {
     const { userQuestionData } = this.props;
  
@@ -17,7 +14,7 @@ return(
   <Tabs>
     <TabList>
       <Tab>Unanswered</Tab>
-      <Tab>Ananswered</Tab>
+      <Tab>Answered</Tab>
     </TabList>
 
     <TabPanel>
@@ -42,10 +39,6 @@ return(
 );
       }
     }
-
-
-
-
 
 function mapStateToProps({ authUser, users, questions }) {
   const answeredIds = Object.keys(users[authUser].answers);

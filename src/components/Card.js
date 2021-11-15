@@ -2,11 +2,9 @@ import React, {Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Grid, Box , Heading, GridItem, Image} from '@chakra-ui/react'
-import PropTypes from 'prop-types';
 import PollQuestion from './PollQuestion';
 import PollResult from './PollResult';
 import PollTeaser from './PollTeaser';
-import { colors } from '../utils/helpers';
 
 const pollTypes = {
   POLL_TEASER: 'POLL_TEASER',
@@ -14,56 +12,33 @@ const pollTypes = {
   POLL_RESULT: 'POLL_RESULT'
 };
 
-const PollContent = props => {
-  const { pollType, question, unanswered } = props;
+const QuestionContent = props => {
 
-  switch (pollType) {
-    case pollTypes.POLL_TEASER:
-      return <PollTeaser question={question} unanswered={unanswered} />;
-    case pollTypes.POLL_QUESTION:
-      return <PollQuestion question={question} />;
-    case pollTypes.POLL_RESULT:
-      return <PollResult question={question} />;
-    default:
-      return;
-  }
-};
+const { pollType, question, unanswered} = props;
 
-export class Card extends Component{
-  static propTypes = {
-  question: PropTypes.object,
-  author: PropTypes.object,
-  pollType: PropTypes.string,
-  unanswered: PropTypes.bool,
-  question_id: PropTypes.string
-};
+if(pollType === pollTypes.POLL_TEASER) {
+  return <PollTeaser question={question} unanswered={unanswered} />;
+}
+else if(pollType === pollTypes.POLL_QUESTION){
+  return <PollQuestion question={question} />;
+}
+else if(pollType ===pollTypes.POLL_RESULT){
+  return <PollResult question={question} />;
+}
+}
+
+export class Card extends Component {
+
 render() {
-  const {
-    author,
-    question,
-    pollType,
-    badPath,
-    unanswered = null
-  } = this.props;
+  const {author, question,  pollType, badPath, unanswered = null} = this.props;
 
   if (badPath === true) {
     return <Redirect to="/questions/bad_id" />;
   }
-
-  const tabColor = unanswered === true ? colors.green : colors.blue;
-  const borderTop =
-    unanswered === null
-      ? `1px solid ${colors.grey}`
-      : `2px solid ${tabColor.hex}`;
-
   return (
     <React.Fragment>
     <Heading
-      as="h5"
-      textAlign="left"
-      block
-      attached="top"
-      style={{ borderTop: borderTop }}
+    size="md"
     >
       {author.name} asks:
     </Heading>
@@ -74,7 +49,7 @@ render() {
           <Image src={author.avatarURL} />
         </Box>
         <Box>
-          <PollContent
+          <QuestionContent
             pollType={pollType}
             question={question}
             unanswered={unanswered}
@@ -88,14 +63,10 @@ render() {
 }
 
 
-function mapStateToProps(
-  { users, questions, authUser },
-  { match, question_id }
-) {
-  let question,
-    author,
-    pollType,
-    badPath = false;
+function mapStateToProps({ users, questions, authUser }, { match, question_id })
+{
+
+  let question,author, pollType,  badPath = false;
   if (question_id !== undefined) {
     question = questions[question_id];
     author = users[question.author];
@@ -115,12 +86,13 @@ function mapStateToProps(
       }
     }
   }
-
-  return {
-    badPath,
-    question,
-    author,
-    pollType
-  };
+    return {
+      badPath,
+      question,
+      author,
+      pollType
+    };
+  
 }
+    
 export default connect(mapStateToProps)(Card);

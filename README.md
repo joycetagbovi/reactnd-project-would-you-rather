@@ -87,3 +87,22 @@ Languages
 JavaScript
 100.0%
 
+ {
+  let question, author,  pollType, badPath = false;
+  if (question_id !== undefined) {
+    question = questions[question_id];
+    author = users[question.author];
+    pollType = pollTypes.POLL_TEASER;
+  } else {
+    const { question_id } = match.params;
+    question = questions[question_id];
+    const user = users[authUser];
+
+    if (question === undefined) {
+      badPath = true;
+    } else {
+      author = users[question.author];
+      pollType = pollTypes.POLL_QUESTION;
+      if (Object.keys(user.answers).includes(question.id)) {
+        pollType = pollTypes.POLL_RESULT;
+      }

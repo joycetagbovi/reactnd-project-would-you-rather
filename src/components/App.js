@@ -11,6 +11,7 @@ import NewQuestion from "./NewQuestion";
 import NoMatch from "./NoMatch";
 import Card from './Card';
 
+
 class App extends React.Component {
   componentDidMount() { 
     this.props.handleInitialData(); 
@@ -35,12 +36,11 @@ class App extends React.Component {
         <Switch>
           <Route path ="/login" component={Login} />
           <Route path="/home" component={Home} />
-          <Redirect exact from ="/" to="/home"  />
           <Route path="/questions/:question_id" component={Card} />
           <Route path="/add" component={NewQuestion} />
             <Route path="/leaderboard" component={Leaderboard} />
-            <PrivateRoute path="*" component={NoMatch} />
-          <Route  component={NoMatch} />
+            <Route component={NoMatch} />
+            <Redirect exact from="/" to="/home" />
             
         </Switch>
      </Fragment>    
@@ -52,26 +52,26 @@ class App extends React.Component {
 }
 }
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  const authed = !!rest.authUser;
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        authed ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{
-              pathname: '/home',
-              state: { from: props.location.pathname },
-            }}
-          />
-        )
-      }
-    />
-  );
-};
+//const PrivateRoute = ({ component: Component, ...rest }) => {
+ // const authed = !!rest.authUser;
+ // return (
+ //   <Route
+ //     {...rest}
+    //  render={props =>
+    ///    authed ? (
+    //     <Component {...props} />
+     //   ) : (
+     //     <Redirect
+     //       to={{
+       //       pathname: '/home',
+        //      state: { from: props.location.pathname },
+       //     }}
+       //   />
+    //    )
+  //    }
+  //  />
+//  );
+//};
 
 
 function mapStateToProps({ authUser }) {

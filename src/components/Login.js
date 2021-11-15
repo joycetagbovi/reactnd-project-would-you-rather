@@ -42,7 +42,7 @@ class Login extends Component {
       }
     });
    const from =
-   this.props.location.state || { from: { pathname: '/dashboard'}}
+   this.props.location.state || { from: { pathname: '/home'}}
 
     this.props.dispatch(setAuthUser(id));
     this.props.history.push(`${from}`);
@@ -55,7 +55,7 @@ class Login extends Component {
     return (
       <Fragment>
       <Container>
-      <Box as="h4" block attached="top" textAlign="center">
+      <Box>
     <Heading>Welcome to the Would You Rather App!</Heading>
     <Text>Please sign in to continue</Text>
     <form onSubmit={this.handleSubmit }>

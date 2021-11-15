@@ -1,20 +1,11 @@
 import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {
-  Heading,
-  Progress,
-  Box,
-  Label,
-  Button,
-  Icon
-} from '@chakra-ui/react';
-import { styles } from '../utils/helpers';
+import { Heading, Progress, Box, Label, Button, IconButton, CheckedIcon, Text} from '@chakra-ui/react';
 
 const YourVoteLabel = () => (
-  <Label color="orange" ribbon="right" className="vote">
-    <Icon name="check circle outline" size="big" className="compact" />
+  <Label >
+    <IconButton icon={<CheckedIcon />}  colorScheme="green" />
     <div style={{ float: 'right' }}>
       Your
       <br />
@@ -24,11 +15,7 @@ const YourVoteLabel = () => (
 );
 
 export class PollResult extends Component {
-  static propTypes = {
-    history: PropTypes.object.isRequired,
-    question: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequired
-  };
+
   handleClick = () => {
     this.props.history.push('/');
   };
@@ -40,13 +27,6 @@ export class PollResult extends Component {
     const votesTotal = optionOneVotes + optionTwoVotes;
     const userVote = user.answers[question.id];
 
-    let option1 = styles.secondary,
-      option2 = styles.secondary;
-    if (optionOneVotes > optionTwoVotes) {
-      option1 = styles.primary;
-    } else if (optionTwoVotes > optionOneVotes) {
-      option2 = styles.primary;
-    }
 
     return (
       <Fragment>
@@ -57,30 +37,29 @@ export class PollResult extends Component {
           </Heading>
         </Heading>
         <Box
-          color={option1.color}
-          style={{ backgroundColor: `${option1.bgColor}` }}
+          colorScheme="blue"
+         
         >
           {userVote === 'optionOne' && <YourVoteLabel />}
-          <p style={{ fontWeight: 'bold' }}>{question.optionOne.text}</p>
+          <Text> {question.optionOne.text}</Text>
           <Progress
             percent={((optionOneVotes / votesTotal) * 100).toFixed(2)}
             progress
-            color={option1.color}
+          
           >
             {optionOneVotes} out of {votesTotal} votes
           </Progress>
         </Box>
         <Box
-          color={option2.color}
-          style={{ backgroundColor: `${option2.bgColor}` }}
+         
         >
           {userVote === 'optionTwo' && <YourVoteLabel />}
 
-          <p style={{ fontWeight: 'bold' }}>{question.optionTwo.text}</p>
+          <Text>{question.optionTwo.text}</Text>
           <Progress
             percent={((optionTwoVotes / votesTotal) * 100).toFixed(2)}
             progress
-            color={option2.color}
+          
           >
             {optionTwoVotes} out of {votesTotal} votes
           </Progress>

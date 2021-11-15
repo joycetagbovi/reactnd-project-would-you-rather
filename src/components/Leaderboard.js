@@ -1,12 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-//import UserSummary from './UserSummary';
-
+import { Text, Heading, Box, Stack} from '@chakra-ui/react'
 
 const Leaderboard = props => {
   const { users } = props;
   const names = users ? Object.keys(users) : null;
-  // Format and sort users to have all info needed to render leder board in the right order
   const formated =
     names !== null
       ? names
@@ -20,37 +18,36 @@ const Leaderboard = props => {
           }))
           .sort((a, b) => b.total - a.total)
       : [];
-  // for sorted users return a list of UserSummary components
   return (
-    <div >
-      {!formated.length ? null : formated.map(name => <UserSummary key={name.id} name={name} />)}
-    </div>
+    <Box >
+      {!formated.length ? null : formated.map(name => <UserScore key={name.id} name={name} />)}
+    </Box>
   );
 };
 
-const UserSummary = props => {
+const UserScore = props => {
     const { name } = props;
     return (
-      <div key={name.id} >
-        <div >
+      <Stack key={name.id} >
+        <Box>
           <img  src={name.avatar} alt={`${name.name}'s avatar`} />
-        </div>
-        <div >
-          <h3 >{name.name}</h3>
-          <p>
+        </Box>
+        <Box >
+          <Heading >{name.name}</Heading>
+          <Text>
             <span>Answered questions</span>
             <span>{name.answered}</span>
-          </p>
-          <p >
+          </Text>
+          <Text >
             <span>Created questions</span>
             <span>{name.asked}</span>
-          </p>
-        </div>
-        <div >
-          <p>score</p>
-          <div >{name.total}</div>
-        </div>
-      </div>
+          </Text>
+        </Box>
+        <Box >
+          <Text>score</Text>
+          <Box >{name.total}</Box>
+        </Box>
+      </Stack>
     );
   };
 

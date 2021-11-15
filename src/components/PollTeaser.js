@@ -1,36 +1,34 @@
 import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { Heading, Button, Text} from '@chakra-ui/react';
-
-
+import { connect } from 'react-redux';
 
 export class PollTeaser extends Component {
-  static propTypes = {
-    question: PropTypes.object.isRequired,
-    unanswered: PropTypes.bool.isRequired
+  
+ state = {
+   questionPoll: false
   };
-  state = {
-    viewPoll: false
-  };
-  handleClick = e => {
-    this.setState(prevState => ({
-      viewPoll: !prevState.viewPoll
-    }));
-  };
+
+ handleClick = e => {
+  e.preventDefault();
+   this.setState(() => ({
+   questionPoll: !this.state.questionPoll
+   }));
+ };
+
+
   render() {
     const { question } = this.props;
-   
-    if (this.state.viewPoll === true) {
-      return <Redirect push to={`/questions/${question.id}`} />;
+    if (this.state.questionPoll === true) {
+      return <Redirect path to={`/questions/${question.id}`} />;
     }
     return (
       <Fragment>
-        <Heading  size="sm">
+        <Heading size="sm">
           Would you rather
         </Heading>
         <Text fontSize="sm">
-          {question.optionOne.text}
+          {this.props.question.optionOne.text}
           <br />
           or...
         </Text>
@@ -46,4 +44,10 @@ export class PollTeaser extends Component {
   }
 }
 
-export default PollTeaser;
+function mapStateToProps({  authUser }) {
+  return {
+    authUser
+  };
+}
+
+export default (connect(mapStateToProps)(PollTeaser));
