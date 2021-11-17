@@ -1,7 +1,7 @@
 import React, {Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Grid, Box , Heading, GridItem, Image} from '@chakra-ui/react'
+import { Stack, Heading, SimpleGrid, Avatar} from '@chakra-ui/react'
 import PollQuestion from './PollQuestion';
 import PollResult from './PollResult';
 import PollTeaser from './PollTeaser';
@@ -37,69 +37,38 @@ else{
 export class Card extends Component {
 
 render() {
-  const {author, question,  pollType, badPath, unanswered = null} = this.props;
+  const {
+    author, question,  pollType, badPath,  unanswered = null} = this.props;
+
 
   if (badPath === true) {
     return <Redirect to="/questions/bad_id" />;
   }
   return (
     <React.Fragment>
-    <Heading
-    size="md"
-    >
-      {author.name} asks:
-    </Heading>
-
-    <Grid  h="300px" templateRows="repeat(2, 1fr)"templateColumns="repeat(5, 1fr)"gap={2}>
-      <GridItem>
-        <Box>
-          <Image src={author.avatarURL} />
-        </Box>
-        <Box>
+     <SimpleGrid columns={1}>
+        <Stack isInline spacing={8} align="center">
+          <Avatar mx={4} size="md" name={author.name} src={author.avatarURL} />
+          <Heading textAlign="center" as="h5" size="lg">
+            {author.name} asks:
+          </Heading>
+        </Stack>
         <QuestionContent
-            pollType={pollType}
-            question={question}
-            unanswered={unanswered}
-          />
-        </Box>
-      </GridItem>
-    </Grid>
+          pollType={pollType}
+          question={question}
+          unanswered={unanswered}
+        />
+      </SimpleGrid>
   </React.Fragment>
   );
 }
 }
 
 
-function mapStateToProps({ users, questions, authUser }, { match, question_id })
-{
-  let question,author, pollType,  badPath = true;
-  if (question_id !== undefined) {
-    question = questions[question_id]; 
-    author = users[question.author]; 
-    pollType = pollTypes.POLL_TEASER;
-  } else {
-    const { question_id } = match.params; 
-    question = questions[question_id]; const user = users[authUser];
-    if (question === undefined) {
-      badPath = true;
-    } else {
-      author = users[question.author];
-      pollType = pollTypes.POLL_QUESTION;
-      if (Object.keys(user.answers).includes(question.id)) {
-        pollType = pollTypes.POLL_RESULT;
-      }
-    }
+function mapStateToProps({ users, questions, authUser }, { match, question_id }){
+  return {
+    users, questions, authUser,match, question_id,
   }
-    return {
-      badPath,
-      question,
-      author,
-      pollType
-    }; 
-
-   
-  
-
 }
     
 export default connect(mapStateToProps)(Card); 

@@ -5,7 +5,7 @@ import { handleSaveQuestionAnswer } from '../actions/users';
 
 export class PollQuestion extends Component {
   state = {
-    value: null,
+    value: '',
   };
 
   onhandleChange = (e) => {
