@@ -11,9 +11,8 @@ export class PollTeaser extends Component {
 
  handleClick = e => {
   e.preventDefault();
-   this.setState(() => ({
-   questionPoll: !this.state.questionPoll
-   }));
+  this.setState(({questionPoll: !this.state.questionPoll }));
+
  };
 
 

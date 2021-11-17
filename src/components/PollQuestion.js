@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-//import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Heading, Button,  Radio, Stack , Container} from '@chakra-ui/react';
 import { handleSaveQuestionAnswer } from '../actions/users';

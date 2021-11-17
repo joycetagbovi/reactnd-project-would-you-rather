@@ -6,6 +6,7 @@ import PollQuestion from './PollQuestion';
 import PollResult from './PollResult';
 import PollTeaser from './PollTeaser';
 
+
 const pollTypes = {
   POLL_TEASER: 'POLL_TEASER',
   POLL_QUESTION: 'POLL_QUESTION',
@@ -22,10 +23,16 @@ if(pollType === pollTypes.POLL_TEASER) {
 else if(pollType === pollTypes.POLL_QUESTION){
   return <PollQuestion question={question} />;
 }
-else if(pollType ===pollTypes.POLL_RESULT){
+else if (pollType === pollTypes.POLL_RESULT){
   return <PollResult question={question} />;
 }
-}
+else{
+  return {
+    pollType, question, unanswered
+  }
+} 
+
+} 
 
 export class Card extends Component {
 
@@ -49,7 +56,7 @@ render() {
           <Image src={author.avatarURL} />
         </Box>
         <Box>
-          <QuestionContent
+        <QuestionContent
             pollType={pollType}
             question={question}
             unanswered={unanswered}
@@ -65,17 +72,14 @@ render() {
 
 function mapStateToProps({ users, questions, authUser }, { match, question_id })
 {
-
-  let question,author, pollType,  badPath = false;
+  let question,author, pollType,  badPath = true;
   if (question_id !== undefined) {
-    question = questions[question_id];
-    author = users[question.author];
+    question = questions[question_id]; 
+    author = users[question.author]; 
     pollType = pollTypes.POLL_TEASER;
   } else {
-    const { question_id } = match.params;
-    question = questions[question_id];
-    const user = users[authUser];
-
+    const { question_id } = match.params; 
+    question = questions[question_id]; const user = users[authUser];
     if (question === undefined) {
       badPath = true;
     } else {
@@ -91,8 +95,12 @@ function mapStateToProps({ users, questions, authUser }, { match, question_id })
       question,
       author,
       pollType
-    };
+    }; 
+
+   
   
+
 }
     
-export default connect(mapStateToProps)(Card);
+export default connect(mapStateToProps)(Card); 
+
