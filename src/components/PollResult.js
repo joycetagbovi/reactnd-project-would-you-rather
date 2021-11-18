@@ -1,11 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Heading, Progress, Box, Label, Button, IconButton, CheckedIcon, Text} from '@chakra-ui/react';
+import { Heading, Progress, Box, Label, Button, IconButton, CheckIcon, Text} from '@chakra-ui/react';
+
 
 const YourVoteLabel = () => (
   <Label >
-    <IconButton icon={<CheckedIcon />}  colorScheme="green" />
+    <IconButton icon={<CheckIcon />}  colorScheme="green" />
     <div style={{ float: 'right' }}>
       Your
       <br />
